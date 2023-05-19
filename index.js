@@ -42,9 +42,28 @@ function handleRetweetClick(tweetId){
     else{
         targetTweetObj.retweets++
     }
+
     targetTweetObj.isRetweeted = !targetTweetObj.isRetweeted
-    render() 
+    
+    let newTweetRetweetedData = {}
+    newTweetRetweetedData.handle = targetTweetObj.handle
+    newTweetRetweetedData.profilePic = targetTweetObj.profilePic
+    newTweetRetweetedData.likes = 0
+    newTweetRetweetedData.retweets = 0
+    newTweetRetweetedData.tweetText = targetTweetObj.tweetText
+    newTweetRetweetedData.isLiked = false
+    newTweetRetweetedData.isRetweeted = false
+    newTweetRetweetedData.replies = []
+    newTweetRetweetedData.uuid = uuidv4()
+    newTweetRetweetedData.retweet = true
+
+    tweetsData.unshift(newTweetRetweetedData)
+    
+    render()
+
 }
+
+
 
 function handleReplyClick(replyId){
     document.getElementById(`replies-${replyId}`).classList.toggle('hidden')
@@ -68,7 +87,6 @@ function handleTweetBtnClick(){
     render()
     tweetInput.value = ''
     }
-
 }
 
 function getFeedHtml(){
@@ -88,27 +106,34 @@ function getFeedHtml(){
             retweetIconClass = 'retweeted'
         }
         
+        let retweetClass = 'hidden'
+        if(tweet.retweet){
+            retweetClass = 'retweet'
+        }
+
         let repliesHtml = ''
         
         if(tweet.replies.length > 0){
             tweet.replies.forEach(function(reply){
                 repliesHtml+=`
-<div class="tweet-reply">
-    <div class="tweet-inner">
-        <img src="${reply.profilePic}" class="profile-pic">
-            <div>
-                <p class="handle">${reply.handle}</p>
-                <p class="tweet-text">${reply.tweetText}</p>
-            </div>
-        </div>
-</div>
-`
-            })
-        }
-        
+                    <div class="tweet-reply">
+                        <div class="tweet-inner">
+                            <img src="${reply.profilePic}" class="profile-pic">
+                                <div>
+                                    <p class="handle">${reply.handle}</p>
+                                    <p class="tweet-text">${reply.tweetText}</p>
+                                </div>
+                            </div>
+                    </div>
+                    `
+                })
+            }
           
         feedHtml += `
 <div class="tweet">
+    <div class="${retweetClass}"">
+        <i class="fa-solid fa-retweet"></i> @Scrimba retweeted
+    </div>
     <div class="tweet-inner">
         <img src="${tweet.profilePic}" class="profile-pic">
         <div>

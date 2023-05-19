@@ -118,6 +118,12 @@ button{
     line-height: 20px;
 }
 
+.retweet{
+    margin: 10px;
+    color:#555;
+    font-size: 12px;
+}
+
 /* images */
 
 .profile-pic{
