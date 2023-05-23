@@ -2,13 +2,22 @@ html, body {
     margin: 0;
     padding: 0;
     font-family: 'Roboto', sans-serif;
+    background: hsla(31, 90%, 76%, 1);
+
+    background: linear-gradient(90deg, hsla(31, 90%, 76%, 1) 0%, hsla(302, 82%, 76%, 1) 100%);
+
+    background: -moz-linear-gradient(90deg, hsla(31, 90%, 76%, 1) 0%, hsla(302, 82%, 76%, 1) 100%);
+
+    background: -webkit-linear-gradient(90deg, hsla(31, 90%, 76%, 1) 0%, hsla(302, 82%, 76%, 1) 100%);
+
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#F9C58D", endColorstr="#F492F0", GradientType=1 );
 }
 
 /* typography and icons */
 
 h1{
     color: #0F8CDF;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
     font-size: 20px;
 }
 
@@ -32,8 +41,14 @@ i{
 /* layout */
 
 main, header{
-    width: 290px;
-    margin: 0 auto;
+    width: 100%;
+    max-width: 300px;
+    display: block;
+    margin: 45px auto;
+    padding: 60px;
+    box-shadow: 0 0.125rem 3.375rem rgba(0,0,0,.5);
+    border-radius: 20px;
+    background-color: #fff;
 }
 
 header{
