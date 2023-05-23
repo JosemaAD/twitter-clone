@@ -14,6 +14,9 @@ document.addEventListener('click', function(e){
     else if(e.target.id === 'tweet-btn'){
         handleTweetBtnClick()
     }
+    else if(e.target.dataset.replyBtn){
+        handleReplyBtnClick(e.target.dataset.replyBtn)
+    }
 })
  
 // function to like
@@ -72,7 +75,7 @@ function handleReplyClick(replyId){
 // function to tweet
 function handleTweetBtnClick(){
     const tweetInput = document.getElementById('tweet-input')
-
+console.log(tweetInput.value)
     if(tweetInput.value){
         tweetsData.unshift({
             handle: `@Scrimba`,
@@ -88,6 +91,31 @@ function handleTweetBtnClick(){
     render()
     tweetInput.value = ''
     }
+}
+
+// function to reply
+function handleReplyBtnClick(tweetId){
+    
+    const targetTweetObj = tweetsData.filter(function(tweet){
+        return tweet.uuid === tweetId
+    })[0]
+    
+
+    const replyTweetInput = document.querySelector(`[data-textarea="${tweetId}"]`)  
+    console.log(replyTweetInput)
+    
+    if(replyTweetInput.value){
+        targetTweetObj.replies.unshift({
+            handle: `@Scrimba`,
+            profilePic: `images/scrimbalogo.png`,
+            tweetText: replyTweetInput.value,
+        })
+    
+    replyTweetInput.value = ''
+    }
+
+    render()
+
 }
 
 // function to get feed HTML
@@ -165,6 +193,13 @@ function getFeedHtml(){
                         </div>
                         <div class="hidden" id="replies-${tweet.uuid}">
                             ${repliesHtml}
+                            <div class="tweet-reply">
+                                <div class="tweet-input-area">
+                                    <img src="images/scrimbalogo.png" class="profile-pic">
+                                    <textarea placeholder="Tweet your answer" data-textarea="${tweet.uuid}"></textarea>
+                                </div>
+                                <button data-reply-btn="${tweet.uuid}">Reply</button>
+                            </div>
                         </div>   
                     </div>
 `
