@@ -55,7 +55,7 @@ textarea{
     margin: 0 0 20px 0;
     height: 60px;
     width: 100%;
-    font-size: 20px;
+    font-size: 16px;
     line-height: 30px;
 }
 
@@ -116,6 +116,12 @@ button{
     width: 207px;
     font-size: 14px;
     line-height: 20px;
+}
+
+.retweet{
+    margin: 10px;
+    color:#555;
+    font-size: 12px;
 }
 
 /* images */
