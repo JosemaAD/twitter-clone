@@ -1,5 +1,12 @@
-import { tweetsData } from './data.js'
+import { tweetsDataRaw } from './data.js'
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
+const tweetsFromLocalStorage = JSON.parse( localStorage.getItem("tweetsData") )
+let tweetsData = tweetsDataRaw
+
+if (tweetsFromLocalStorage) {
+    tweetsData = tweetsFromLocalStorage
+}
+
 
 document.addEventListener('click', function(e){
     if(e.target.dataset.like){
@@ -16,6 +23,8 @@ document.addEventListener('click', function(e){
     }
     else if(e.target.dataset.replyBtn){
         handleReplyBtnClick(e.target.dataset.replyBtn)
+    }else if(e.target.id === 'delete-local-storage-btn'){
+        cleanLocalStorage()
     }
 })
  
@@ -32,6 +41,9 @@ function handleLikeClick(tweetId){
         targetTweetObj.likes++ 
     }
     targetTweetObj.isLiked = !targetTweetObj.isLiked
+
+    localStorage.setItem("tweetsData", JSON.stringify(tweetsData) )
+
     render()
 }
 
@@ -63,8 +75,9 @@ function handleRetweetClick(tweetId){
 
     targetTweetObj.isRetweeted = !targetTweetObj.isRetweeted
 
-    render()
+    localStorage.setItem("tweetsData", JSON.stringify(tweetsData) )
 
+    render()
 }
 
 // function to show replies
@@ -91,6 +104,7 @@ console.log(tweetInput.value)
     render()
     tweetInput.value = ''
     }
+    localStorage.setItem("tweetsData", JSON.stringify(tweetsData) )
 }
 
 // function to reply
@@ -115,6 +129,7 @@ function handleReplyBtnClick(tweetId){
     }
 
     render()
+    localStorage.setItem("tweetsData", JSON.stringify(tweetsData) )
 
 }
 
@@ -204,7 +219,13 @@ function getFeedHtml(){
                     </div>
 `
    })
+   
    return feedHtml 
+}
+
+//function to clean localStorage
+function cleanLocalStorage(){
+    window.localStorage.clear()
 }
 
 // function to render
@@ -212,5 +233,5 @@ function render(){
     document.getElementById('feed').innerHTML = getFeedHtml()
 }
 
-render()
 
+render()
