@@ -130,13 +130,13 @@ button{
     display: flex;
     font-size: 13px;
     justify-content: space-between;
-    width: 160px;
+    width: 180px;
     color: #71767B;
 }
 
 .tweet-detail{
     display: flex;
-    gap: 4px;
+    gap: 2px;
 }
 
 .tweet-reply{

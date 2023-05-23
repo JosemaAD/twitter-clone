@@ -23,8 +23,12 @@ document.addEventListener('click', function(e){
     }
     else if(e.target.dataset.replyBtn){
         handleReplyBtnClick(e.target.dataset.replyBtn)
-    }else if(e.target.id === 'delete-local-storage-btn'){
+    }
+    else if(e.target.id === 'delete-local-storage-btn'){
         cleanLocalStorage()
+    }
+    else if(e.target.dataset.remove){
+        deleteTweet(e.target.dataset.remove)
     }
 })
  
@@ -114,7 +118,6 @@ function handleReplyBtnClick(tweetId){
         return tweet.uuid === tweetId
     })[0]
     
-
     const replyTweetInput = document.querySelector(`[data-textarea="${tweetId}"]`)  
     console.log(replyTweetInput)
     
@@ -132,6 +135,19 @@ function handleReplyBtnClick(tweetId){
     localStorage.setItem("tweetsData", JSON.stringify(tweetsData) )
 
 }
+
+function deleteTweet(tweetId){
+    const targetTweetObj = tweetsData.filter(function(tweet){
+        return tweet.uuid === tweetId
+    })[0]
+
+    let indexOfTargetedTweet = tweetsData.indexOf(targetTweetObj)
+    tweetsData.splice(indexOfTargetedTweet, 1)
+
+    render()
+    localStorage.setItem("tweetsData", JSON.stringify(tweetsData) )    
+}
+
 
 // function to get feed HTML
 function getFeedHtml(){
@@ -180,7 +196,7 @@ function getFeedHtml(){
                             <i class="fa-solid fa-retweet"></i> @Scrimba retweeted
                         </div>
                         <div class="tweet-inner">
-                            <img src="${tweet.profilePic}" class="profile-pic">
+                            <img src="${tweet.profilePic}" class="profile-pic"> 
                             <div>
                                 <p class="handle">${tweet.handle}</p>
                                 <p class="tweet-text">${tweet.tweetText}</p>
@@ -202,6 +218,9 @@ function getFeedHtml(){
                                         data-retweet="${tweet.uuid}"
                                         ></i>
                                         ${tweet.retweets}
+                                    </span>
+                                    <span class="tweet-detail">
+                                        <i class="fa-solid fa-trash" data-remove="${tweet.uuid}"></i>
                                     </span>
                                 </div>   
                             </div>            
